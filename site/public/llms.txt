@@ -1,0 +1,40 @@
+# InstaBlock
+
+> InstaBlock is a free iOS app that blocks Instagram Reels and TikTok videos while keeping DMs, stories and photos working.
+
+InstaBlock is a free iPhone and iPad app (iOS 17+) for people who want to stop
+doomscrolling Instagram Reels and TikTok without deleting the apps or losing
+Instagram messages. It is not affiliated with Instagram, Meta, TikTok or ByteDance.
+
+## What it does
+- Blocks Instagram Reels and TikTok videos from loading. Instagram DMs, stories,
+  comments and photos keep working; TikTok's feed effectively stops (it is all video).
+- Blocking is always on; there is deliberately no off switch.
+- One-tap timed breaks: 1, 5, 15 or 30 minutes of videos, then the block returns
+  automatically — the user does not need to open the app again.
+- No account, no sign-up, no analytics, no server. The filter runs entirely on-device.
+
+## How it works (technical)
+The app installs a local iOS packet-tunnel (shown by iOS as a VPN, but with no
+remote server). It intercepts DNS lookups only for Instagram's and TikTok's media
+CDN domains (fbcdn.net, cdninstagram.com, tiktokcdn.com and related), learns the
+resolved addresses, and rate-limits traffic to them (Instagram) or drops it
+(TikTok). Photos are small and survive the limit; video cannot stream. All other
+traffic never enters the filter.
+
+## Known limitations
+- Videos already cached by Instagram/TikTok (for example during a break) may play once.
+- A VPN badge shows in the status bar while blocking is on.
+- Photos may load slightly slower.
+
+## Pages
+- Home: https://instablock.app/
+- Guides: https://instablock.app/guides
+- How to block Instagram Reels without deleting Instagram (iPhone): https://instablock.app/guides/block-instagram-reels-without-deleting-instagram
+- How to turn off Reels on iPhone — and why Screen Time doesn't work: https://instablock.app/guides/turn-off-reels-on-iphone
+- How to block TikTok on iPhone without Screen Time: https://instablock.app/guides/block-tiktok-videos-on-iphone
+- InstaBlock vs Screen Time vs app blockers (Opal, one sec, ClearSpace): https://instablock.app/guides/instablock-vs-screen-time-vs-app-blockers
+- Support: https://instablock.app/support (contact: support@instablock.app)
+- Privacy policy: https://instablock.app/privacy (no data collected)
+- Terms: https://instablock.app/terms
+- App Store: https://apps.apple.com/app/instablock
