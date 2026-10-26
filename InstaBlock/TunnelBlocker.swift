@@ -33,7 +33,9 @@ enum TunnelBlocker {
     #if targetEnvironment(simulator)
     // NetworkExtension configurations can't run in the simulator;
     // stub the tunnel layer so the UI flow is testable there.
-    static func activate(rateKbps: Int) async throws {}
+    static func activate(rateKbps: Int, start: Bool = true) async throws {}
+    static func isConnected() async -> Bool { true }
+    static func isInstalled() async -> Bool { false }   // lets the first-run explainer show in the simulator
     static func startBreak(until end: Date) async throws {}
     static func endBreak() async throws {}
     static func remove() async throws {}
@@ -43,10 +45,25 @@ enum TunnelBlocker {
         try await NETunnelProviderManager.loadAllFromPreferences().first
     }
 
-    /// Install the VPN configuration (if needed) and bring the tunnel up.
-    /// `rateKbps` is the downstream cap for CDN traffic.
+    /// Whether our VPN configuration exists yet (i.e. the user has already been
+    /// through the system's "Add VPN Configurations" prompt).
+    static func isInstalled() async -> Bool {
+        (try? await loadManager()) != nil
+    }
+
+    /// Whether our tunnel is currently connected (or coming up).
+    static func isConnected() async -> Bool {
+        guard let manager = try? await loadManager() else { return false }
+        switch manager.connection.status {
+        case .connected, .connecting, .reasserting: return true
+        default: return false
+        }
+    }
+
+    /// Install/refresh the VPN configuration and, when `start` is true, bring
+    /// the tunnel up. `rateKbps` is the downstream cap for CDN traffic.
     @discardableResult
-    static func activate(rateKbps: Int) async throws -> NETunnelProviderManager {
+    static func activate(rateKbps: Int, start: Bool = true) async throws -> NETunnelProviderManager {
         let manager = try await loadManager() ?? NETunnelProviderManager()
 
         let proto = NETunnelProviderProtocol()
@@ -65,6 +82,7 @@ enum TunnelBlocker {
         try await manager.saveToPreferences()
         try await manager.loadFromPreferences()
 
+        guard start else { return manager }
         switch manager.connection.status {
         case .connected, .connecting, .reasserting:
             break

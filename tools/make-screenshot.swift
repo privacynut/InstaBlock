@@ -10,6 +10,8 @@ let args = CommandLine.arguments
 let W = CGFloat(Int(args[1])!), H = CGFloat(Int(args[2])!)
 let inputPath = args[3], outputPath = args[4]
 let line1 = args[5], line2 = args[6]
+// Optional 7th arg: device width as a fraction of the canvas (default 0.82; 1.0 = edge to edge / bleed)
+let shotFraction: CGFloat = args.count > 7 ? CGFloat(Double(args[7]) ?? 0.82) : 0.82
 
 let srgb = CGColorSpace(name: CGColorSpace.sRGB)!
 func color(_ hex: UInt32, _ a: CGFloat = 1) -> CGColor {
@@ -37,7 +39,7 @@ blob(center: CGPoint(x: W * 0.05, y: H * 0.30), radius: W * 0.80, colors: [ig[0]
 let image = NSImage(contentsOfFile: inputPath)!
 var rect = CGRect(origin: .zero, size: image.size)
 let cg = image.cgImage(forProposedRect: &rect, context: nil, hints: nil)!
-let shotW = W * 0.82
+let shotW = W * shotFraction
 let shotH = shotW * CGFloat(cg.height) / CGFloat(cg.width)
 let shotX = (W - shotW) / 2
 let shotTop = H * (H / W > 1.6 ? 0.245 : 0.235)   // taller (phone) vs squarer (iPad) canvases
@@ -71,11 +73,15 @@ let fontSize = W * (H / W > 1.6 ? 0.078 : 0.062)
 let font = roundedFont(fontSize)
 
 func drawLine(_ text: String, y: CGFloat, gradient: Bool) {
-    let attr = NSAttributedString(string: text, attributes: [
-        .font: font, .foregroundColor: NSColor(cgColor: color(0x1C1C1E))!,
-    ])
-    let line = CTLineCreateWithAttributedString(attr)
-    let width = CTLineGetTypographicBounds(line, nil, nil, nil)
+    // Auto-fit: shrink the headline until it sits within 92% of the canvas width.
+    var size = fontSize
+    var line = CTLineCreateWithAttributedString(NSAttributedString(string: text, attributes: [.font: roundedFont(size), .foregroundColor: NSColor(cgColor: color(0x1C1C1E))!]))
+    var width = CTLineGetTypographicBounds(line, nil, nil, nil)
+    while CGFloat(width) > W * 0.92 && size > 10 {
+        size *= 0.96
+        line = CTLineCreateWithAttributedString(NSAttributedString(string: text, attributes: [.font: roundedFont(size), .foregroundColor: NSColor(cgColor: color(0x1C1C1E))!]))
+        width = CTLineGetTypographicBounds(line, nil, nil, nil)
+    }
     let x = (W - CGFloat(width)) / 2
     ctx.saveGState()
     ctx.textPosition = CGPoint(x: x, y: y)
@@ -83,7 +89,7 @@ func drawLine(_ text: String, y: CGFloat, gradient: Bool) {
         ctx.setTextDrawingMode(.clip)
         CTLineDraw(line, ctx)
         let g = CGGradient(colorsSpace: srgb, colors: [ig[1], ig[3], ig[5]] as CFArray, locations: [0, 0.5, 1])!
-        ctx.drawLinearGradient(g, start: CGPoint(x: x, y: y), end: CGPoint(x: x + CGFloat(width), y: y + fontSize), options: [])
+        ctx.drawLinearGradient(g, start: CGPoint(x: x, y: y), end: CGPoint(x: x + CGFloat(width), y: y + size), options: [])
     } else {
         CTLineDraw(line, ctx)
     }

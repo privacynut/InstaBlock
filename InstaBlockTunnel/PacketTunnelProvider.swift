@@ -23,6 +23,7 @@ import Foundation
 import Network
 import NetworkExtension
 import ResolvShim
+import UserNotifications
 import os
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
@@ -85,6 +86,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     private var drainTimer: DispatchSourceTimer?
     private var sweepTimer: DispatchSourceTimer?
 
+    private var pathMonitor: NWPathMonitor?
+    private var lastPhysicalInterface: NWInterface.InterfaceType?
+
     private var breakEnd: Date?
     private var breakTimer: DispatchSourceTimer?
     private var isOnBreak: Bool { breakEnd.map { $0 > Date() } ?? false }
@@ -144,8 +148,18 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 return
             }
             self.startSweepTimer()
+            self.startPathMonitor()
             self.readPackets()
             completionHandler(nil)
+            if self.defaults.bool(forKey: "pausedNotified") {
+                self.defaults.removeObject(forKey: "pausedNotified")
+                let center = UNUserNotificationCenter.current()
+                // Clean up any reminder left over from an earlier build.
+                center.removePendingNotificationRequests(withIdentifiers: ["vpn-paused-reminder"])
+                center.removeDeliveredNotifications(withIdentifiers: ["vpn-paused", "vpn-paused-reminder"])
+                Self.notify(id: "vpn-resumed", title: "InstaBlock is back on",
+                            body: "Instagram and TikTok videos are blocked again.", category: "VPN_RESUMED") {}
+            }
         }
     }
 
@@ -154,11 +168,40 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             drainTimer?.cancel(); drainTimer = nil
             sweepTimer?.cancel(); sweepTimer = nil
             breakTimer?.cancel(); breakTimer = nil
+            pathMonitor?.cancel(); pathMonitor = nil
             flows.values.forEach { $0.connection.cancel() }
             flows.removeAll()
             shapers.removeAll()
         }
-        completionHandler()
+        // Tell the user when the block goes away for a reason on-demand won't
+        // fix by itself (another VPN took over, or it was switched off), and
+        // remember it so the next start can announce "back on".
+        let body: String?
+        switch reason {
+        case .superceded, .userSwitch:
+            body = "Another VPN took over. Videos are NOT blocked until it disconnects."
+        case .userInitiated, .configurationDisabled, .providerDisabled:
+            body = "InstaBlock was turned off. Videos are NOT blocked."
+        default:
+            body = nil
+        }
+        log.notice("stopping: reason \(reason.rawValue)")
+        guard let body else { completionHandler(); return }
+        defaults.set(true, forKey: "pausedNotified")
+        Self.notify(id: "vpn-paused", title: "InstaBlock is off", body: body, category: "VPN_PAUSED") {
+            completionHandler()
+        }
+    }
+
+    /// Post a local notification from the extension (uses the host app's permission).
+    private static func notify(id: String, title: String, body: String, category: String, completion: @escaping () -> Void) {
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        content.sound = .default
+        content.categoryIdentifier = category
+        let request = UNNotificationRequest(identifier: id, content: content, trigger: nil)
+        UNUserNotificationCenter.current().add(request) { _ in completion() }
     }
 
     /// App messages: "break:<unix-time>" starts/extends a break until then,
@@ -509,6 +552,41 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         if !anyQueued {
             drainTimer?.cancel()
             drainTimer = nil
+        }
+    }
+
+    // MARK: - Network path changes (Wi-Fi <-> cellular)
+
+    /// The upstream resolvers and the relay's sockets belong to the physical
+    /// network the tunnel started on. When the phone moves between Wi-Fi and
+    /// cellular, refresh the resolvers (the old ones may be unreachable, and
+    /// each dead one costs a timeout per lookup) and drop the relay flows so
+    /// new ones are opened on the new path.
+    private func startPathMonitor() {
+        let monitor = NWPathMonitor()
+        monitor.pathUpdateHandler = { [weak self] path in
+            guard let self else { return }
+            self.queue.async { self.handlePathChange(path) }
+        }
+        monitor.start(queue: queue)
+        pathMonitor = monitor
+    }
+
+    private func handlePathChange(_ path: Network.NWPath) {
+        // Ignore our own utun (.other); look at the physical interface.
+        let physical = path.availableInterfaces.first { $0.type != .other }?.type
+        guard path.status == .satisfied, let physical else { return }
+        let changed = lastPhysicalInterface != nil && lastPhysicalInterface != physical
+        lastPhysicalInterface = physical
+        let fresh = Self.systemResolvers()
+        if !fresh.isEmpty, fresh != upstreams {
+            upstreams = fresh
+            log.notice("path changed to \(String(describing: physical)); resolvers now \(fresh)")
+        }
+        if changed {
+            flows.values.forEach { $0.connection.cancel() }
+            flows.removeAll()
+            shapers.removeAll()
         }
     }
 

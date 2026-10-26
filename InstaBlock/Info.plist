@@ -5,6 +5,7 @@
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>com.helpon.InstaBlock.reblock</string>
+		<string>com.helpon.InstaBlock.reblock.processing</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
