@@ -1,16 +1,16 @@
 # InstaBlock
 
-> InstaBlock is a free iOS app that blocks Instagram Reels and TikTok videos while keeping DMs, stories and photos working.
+> InstaBlock is a free iOS and Android app that blocks Instagram Reels and TikTok videos while keeping DMs, stories and photos working.
 
-InstaBlock is a free iPhone and iPad app (iOS 17+) for people who want to stop
-doomscrolling Instagram Reels and TikTok without deleting the apps or losing
-Instagram messages. It is not affiliated with Instagram, Meta, TikTok or ByteDance.
+InstaBlock is a free app for iPhone/iPad (iOS 17+) and Android (7+) for people who
+want to stop doomscrolling Instagram Reels and TikTok without deleting the apps or
+losing Instagram messages. It is not affiliated with Instagram, Meta, TikTok or ByteDance.
 
 ## What it does
 - Blocks Instagram Reels and TikTok videos from loading. Instagram DMs, stories,
   comments and photos keep working; TikTok's feed effectively stops (it is all video).
 - Blocking is always on; there is deliberately no off switch.
-- One-tap timed breaks: 1, 5, 15 or 30 minutes of videos, then the block returns
+- Timed breaks: hold a card for 5 seconds to allow videos for 1, 5, 15 or 30 minutes, then the block returns; a short cooldown (5–30 s) follows each break
   automatically — the user does not need to open the app again.
 - No account, no sign-up, no analytics, no server. The filter runs entirely on-device.
 
@@ -22,10 +22,19 @@ resolved addresses, and rate-limits traffic to them (Instagram) or drops it
 (TikTok). Photos are small and survive the limit; video cannot stream. All other
 traffic never enters the filter.
 
+## Other VPNs
+Phones allow one active VPN and the filter counts as one. When another VPN turns
+on, InstaBlock steps aside and notifies the user ("InstaBlock is off"); when it
+disconnects, InstaBlock comes back — on iPhone via a one-tap notification action or
+opening the app, on Android automatically where consent survives, otherwise via a
+one-tap notification (Android re-asks VPN permission). It never evicts another VPN
+on its own. On Android the filter is scoped to the Instagram and TikTok apps only.
+
 ## Known limitations
 - Videos already cached by Instagram/TikTok (for example during a break) may play once.
 - A VPN badge shows in the status bar while blocking is on.
 - Photos may load slightly slower.
+- Wi-Fi/cellular switches are handled automatically.
 
 ## Pages
 - Home: https://instablock.app/
@@ -37,4 +46,5 @@ traffic never enters the filter.
 - Support: https://instablock.app/support (contact: support@instablock.app)
 - Privacy policy: https://instablock.app/privacy (no data collected)
 - Terms: https://instablock.app/terms
-- App Store: https://apps.apple.com/app/instablock
+- Google Play: https://play.google.com/store/apps/details?id=com.helpon.instablock
+- App Store: iOS version submitted, awaiting App Review (link will be added when live)

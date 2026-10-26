@@ -4,10 +4,10 @@
 <p><strong>The short version:</strong> InstaBlock collects no data. It has no account system, no analytics, and no server of its own. Nothing about you or your usage leaves your device.</p>
 <h2>1. Who we are</h2><p>InstaBlock is developed and operated by Leonid Pechersky ("we", "us"). Contact: <a href="mailto:support@instablock.app">support@instablock.app</a>.</p>
 <h2>2. What the app does with your network traffic</h2>
-<p>InstaBlock installs a local network filter using Apple's Network Extension framework (iOS presents it as a VPN configuration). This filter runs entirely on your device:</p>
+<p>InstaBlock installs a local network filter — on iOS through Apple's Network Extension framework, on Android through the <code>VpnService</code> API (both platforms present it as a VPN). This filter runs entirely on your device:</p>
 <ul>
 <li>It only intercepts DNS lookups for Instagram's and TikTok's media servers (for example <code>fbcdn.net</code>, <code>cdninstagram.com</code>, <code>tiktokcdn.com</code>) and limits the speed of connections to those servers.</li>
-<li>All other traffic — every other app, website and DNS lookup — never enters the filter.</li>
+<li>All other traffic — every other app, website and DNS lookup — never enters the filter. On Android the filter is additionally restricted to the Instagram and TikTok apps themselves.</li>
 <li>No traffic is sent to, routed through, logged by, or inspected by any server operated by us or anyone else. The filter has no remote endpoint.</li>
 <li>The addresses it learns are stored only on your device and are deleted when you delete the app.</li>
 </ul>

@@ -5,7 +5,7 @@ import json, re, pathlib, datetime
 
 PUB = pathlib.Path("public")
 SITE = "https://instablock.app"
-ONE_LINER = ("InstaBlock is a free iOS app that blocks Instagram Reels and TikTok videos "
+ONE_LINER = ("InstaBlock is a free iOS and Android app that blocks Instagram Reels and TikTok videos "
              "while keeping DMs, stories and photos working.")
 TODAY = datetime.date(2026, 9, 3).isoformat()
 
@@ -34,24 +34,31 @@ def ld(obj):
 ORG = {"@type": "Organization", "name": "InstaBlock", "url": SITE + "/", "logo": SITE + "/assets/icon.png",
        "contactPoint": {"@type": "ContactPoint", "email": "support@instablock.app", "contactType": "customer support"}}
 APP = {"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "InstaBlock",
-       "operatingSystem": "iOS 17 or later, iPadOS 17 or later", "applicationCategory": "UtilitiesApplication",
+       "operatingSystem": "iOS 17 or later, iPadOS 17 or later, Android 7 or later", "applicationCategory": "UtilitiesApplication",
        "applicationSubCategory": "Digital wellbeing / distraction blocker",
        "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
        "description": ONE_LINER + " Tap for a 1, 5, 15 or 30-minute break when you want to watch; videos stop again automatically. No account, no tracking; the filter runs entirely on-device.",
-       "url": SITE + "/", "installUrl": "https://apps.apple.com/app/instablock", "downloadUrl": "https://apps.apple.com/app/instablock",
+       "url": SITE + "/", "installUrl": "https://play.google.com/store/apps/details?id=com.helpon.instablock",
+       "downloadUrl": ["https://play.google.com/store/apps/details?id=com.helpon.instablock"],
        "screenshot": [SITE + f"/assets/0{i}-{n}.png" for i, n in [(1, "reels-blocked"), (2, "take-a-break"), (3, "times-up"), (4, "private")]],
        "featureList": ["Blocks Instagram Reels and TikTok videos", "Instagram DMs, stories, comments and photos keep working",
-                       "One-tap timed breaks: 1, 5, 15 or 30 minutes, then videos block again automatically",
-                       "Always on — no off switch to cheat with", "No account, no analytics, no servers; on-device network filter"],
+                       "Timed breaks: hold a card for 5 seconds to allow videos for 1, 5, 15 or 30 minutes, then they block again automatically",
+                       "Always on — no off switch to cheat with", "No account, no analytics, no servers; on-device network filter",
+                       "Steps aside for other VPNs and notifies you; comes back when they disconnect",
+                       "Android: filter scoped to the Instagram and TikTok apps only"],
        "author": {"@type": "Person", "name": "Leonid Pechersky"}, "publisher": ORG, "datePublished": TODAY, "isAccessibleForFree": True}
 
 HOME_FAQ = [
     ("Why not just use Screen Time?", "Screen Time blocks the whole app, so you either lose your messages or tap \"Ignore Limit\" and keep scrolling. InstaBlock removes only the addictive part and leaves the useful part alone."),
     ("Does it work with TikTok too?", "Yes. TikTok's video servers are blocked the same way. Since TikTok is all video, the feed effectively stops loading while blocking is on. A break brings it right back."),
     ("Is it really a VPN? Does my traffic go somewhere?", "It uses iOS's VPN framework to run a filter on your phone, but it has no server. Your traffic goes exactly where it always went — the app just refuses to let video servers stream at full speed."),
-    ("Can I turn blocking off?", "You can pause it for 1, 5, 15 or 30 minutes with one tap. There's deliberately no permanent off switch — deleting the app (or its VPN profile in Settings) is the only way out."),
+    ("Can I turn blocking off?", "You can pause it for 1, 5, 15 or 30 minutes by holding a duration card for 5 seconds — long enough to notice you're choosing, short enough not to be annoying. After each break the cards lock for a few seconds (5–30 s, matching the break) so one break can't roll straight into the next; \"Block videos now\" is always one tap during a break. There's deliberately no permanent off switch — deleting the app (or its VPN profile in Settings) is the only way out."),
     ("Does it drain battery or slow the internet?", "No. Only traffic to Instagram's and TikTok's video servers passes through the filter; everything else never touches it."),
     ("Does it collect anything?", "Nothing. There's no backend to collect it with."),
+    ("Can I use InstaBlock together with my regular VPN?", "Not at the same time — phones allow one active VPN and InstaBlock's filter counts as one. When you turn on another VPN, InstaBlock steps aside and notifies you that videos are no longer blocked; when that VPN disconnects, InstaBlock comes back (one tap on the notification on iPhone; automatically or via a one-tap notification on Android). It never kicks your other VPN off on its own."),
+    ("Why does the app say 'Paused — another VPN is active'?", "Another VPN holds the phone's VPN slot, so InstaBlock's filter isn't running and videos play. Turn that VPN off, or tap 'Turn InstaBlock back on' to let InstaBlock take over."),
+    ("Does it keep working when I switch between Wi-Fi and cellular?", "Yes. The filter follows the phone across networks and re-checks its settings on every switch."),
+    ("Is there an Android version?", "Yes — <a href=\"https://play.google.com/store/apps/details?id=com.helpon.instablock\" rel=\"noopener\">InstaBlock is on Google Play</a>. It works the same way with the same design, and applies the filter only to the Instagram and TikTok apps. Android asks for VPN permission again after another VPN app has been used."),
 ]
 def faq_ld(pairs):
     return {"@context": "https://schema.org", "@type": "FAQPage",
@@ -182,7 +189,7 @@ def guide_page(g):
 <p><strong>{g['answer']}</strong></p>
 {g['body']}
 <h2>Questions</h2><div class="faq">{faq_html}</div>
-<p style="margin-top:36px"><a class="btn" href="/">Get InstaBlock — free on the App Store</a></p>
+<p style="margin-top:36px"><a class="btn" href="/#download">Get InstaBlock — free on the App Store and Google Play</a></p>
 </main>{FOOT}</body></html>"""
     (PUB / "guides").mkdir(exist_ok=True)
     (PUB / "guides" / f"{g['slug']}.html").write_text(html)
@@ -205,6 +212,9 @@ def patch(name, path, title, desc, extra_ld=None, kind="website"):
     s = re.sub(r'<meta name="description"[^>]*>', '', s)
     s = re.sub(r'<meta property="og:[^"]*"[^>]*>', '', s)
     s = re.sub(r'<link rel="canonical"[^>]*>', '', s)
+    s = re.sub(r'<meta name="twitter:[^"]*"[^>]*>', '', s)
+    # Re-runs must not stack structured data: drop previously injected blocks.
+    s = re.sub(r'<script type="application/ld\+json">.*?</script>', '', s, flags=re.S)
     tags = social(path, title, desc, kind=kind) + "".join(ld(o) for o in (extra_ld or []))
     s = s.replace('<link rel="stylesheet" href="/styles.css">', '<link rel="stylesheet" href="/styles.css">' + tags, 1)
     # nav + footer refresh (adds Guides)
@@ -262,15 +272,15 @@ Sitemap: https://instablock.app/sitemap.xml
 
 > {ONE_LINER}
 
-InstaBlock is a free iPhone and iPad app (iOS 17+) for people who want to stop
-doomscrolling Instagram Reels and TikTok without deleting the apps or losing
-Instagram messages. It is not affiliated with Instagram, Meta, TikTok or ByteDance.
+InstaBlock is a free app for iPhone/iPad (iOS 17+) and Android (7+) for people who
+want to stop doomscrolling Instagram Reels and TikTok without deleting the apps or
+losing Instagram messages. It is not affiliated with Instagram, Meta, TikTok or ByteDance.
 
 ## What it does
 - Blocks Instagram Reels and TikTok videos from loading. Instagram DMs, stories,
   comments and photos keep working; TikTok's feed effectively stops (it is all video).
 - Blocking is always on; there is deliberately no off switch.
-- One-tap timed breaks: 1, 5, 15 or 30 minutes of videos, then the block returns
+- Timed breaks: hold a card for 5 seconds to allow videos for 1, 5, 15 or 30 minutes, then the block returns; a short cooldown (5–30 s) follows each break
   automatically — the user does not need to open the app again.
 - No account, no sign-up, no analytics, no server. The filter runs entirely on-device.
 
@@ -282,10 +292,19 @@ resolved addresses, and rate-limits traffic to them (Instagram) or drops it
 (TikTok). Photos are small and survive the limit; video cannot stream. All other
 traffic never enters the filter.
 
+## Other VPNs
+Phones allow one active VPN and the filter counts as one. When another VPN turns
+on, InstaBlock steps aside and notifies the user ("InstaBlock is off"); when it
+disconnects, InstaBlock comes back — on iPhone via a one-tap notification action or
+opening the app, on Android automatically where consent survives, otherwise via a
+one-tap notification (Android re-asks VPN permission). It never evicts another VPN
+on its own. On Android the filter is scoped to the Instagram and TikTok apps only.
+
 ## Known limitations
 - Videos already cached by Instagram/TikTok (for example during a break) may play once.
 - A VPN badge shows in the status bar while blocking is on.
 - Photos may load slightly slower.
+- Wi-Fi/cellular switches are handled automatically.
 
 ## Pages
 - Home: {SITE}/
@@ -294,6 +313,7 @@ traffic never enters the filter.
 - Support: {SITE}/support (contact: support@instablock.app)
 - Privacy policy: {SITE}/privacy (no data collected)
 - Terms: {SITE}/terms
-- App Store: https://apps.apple.com/app/instablock
+- Google Play: https://play.google.com/store/apps/details?id=com.helpon.instablock
+- App Store: iOS version submitted, awaiting App Review (link will be added when live)
 """)
 print("generated:", *urls, sep="\n  ")
