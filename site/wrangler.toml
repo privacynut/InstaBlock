@@ -1,0 +1,27 @@
+name = "instablock"
+main = "src/worker.js"
+compatibility_date = "2026-09-01"
+
+# Serve on the naked domain (zone must be in this Cloudflare account).
+routes = [
+  { pattern = "instablock.app", custom_domain = true },
+  { pattern = "www.instablock.app", custom_domain = true },
+]
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+# Run the Worker before the asset layer so the www -> apex redirect fires.
+run_worker_first = true
+not_found_handling = "404-page"
+html_handling = "auto-trailing-slash"
+
+# Support form → email. Requires Email Routing enabled on instablock.app in
+# this Cloudflare account, and the destination address verified there.
+[[send_email]]
+name = "SUPPORT_EMAIL"
+destination_address = "leo+instablock@pechersky.me"
+
+[vars]
+SUPPORT_TO = "leo+instablock@pechersky.me"
+SUPPORT_FROM = "support@instablock.app"

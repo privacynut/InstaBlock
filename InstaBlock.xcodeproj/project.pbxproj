@@ -6,20 +6,86 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B3F77EDD303BA4A500A3A69E /* InstaBlockTunnel.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B3F77ED0303BA4A500A3A69E /* InstaBlockTunnel.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B3F77EDB303BA4A500A3A69E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B3F77EA5303BA4A500A3A69E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B3F77ED3303BA4A500A3A69E;
+			remoteInfo = InstaBlockTunnel;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B3F77EDC303BA4A500A3A69E /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B3F77EDD303BA4A500A3A69E /* InstaBlockTunnel.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		B3F77EAD303BA4A500A3A69E /* InstaBlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstaBlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3F77ED0303BA4A500A3A69E /* InstaBlockTunnel.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = InstaBlockTunnel.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		B3F77EC0303BA4A500A3A69E /* Exceptions for "InstaBlock" folder in "InstaBlock" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = B3F77EAC303BA4A500A3A69E /* InstaBlock */;
+		};
+		B3F77ED2303BA4A500A3A69E /* Exceptions for "InstaBlockTunnel" folder in "InstaBlockTunnel" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+				ResolvShim/module.modulemap,
+				ResolvShim/ResolvShim.h,
+			);
+			target = B3F77ED3303BA4A500A3A69E /* InstaBlockTunnel */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		B3F77EAF303BA4A500A3A69E /* InstaBlock */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				B3F77EC0303BA4A500A3A69E /* Exceptions for "InstaBlock" folder in "InstaBlock" target */,
+			);
 			path = InstaBlock;
+			sourceTree = "<group>";
+		};
+		B3F77ED1303BA4A500A3A69E /* InstaBlockTunnel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				B3F77ED2303BA4A500A3A69E /* Exceptions for "InstaBlockTunnel" folder in "InstaBlockTunnel" target */,
+			);
+			path = InstaBlockTunnel;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		B3F77EAA303BA4A500A3A69E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B3F77ED5303BA4A500A3A69E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				B3F77EAF303BA4A500A3A69E /* InstaBlock */,
+				B3F77ED1303BA4A500A3A69E /* InstaBlockTunnel */,
 				B3F77EAE303BA4A500A3A69E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				B3F77EAD303BA4A500A3A69E /* InstaBlock.app */,
+				B3F77ED0303BA4A500A3A69E /* InstaBlockTunnel.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -55,10 +123,12 @@
 				B3F77EA9303BA4A500A3A69E /* Sources */,
 				B3F77EAA303BA4A500A3A69E /* Frameworks */,
 				B3F77EAB303BA4A500A3A69E /* Resources */,
+				B3F77EDC303BA4A500A3A69E /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B3F77EDA303BA4A500A3A69E /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				B3F77EAF303BA4A500A3A69E /* InstaBlock */,
@@ -69,6 +139,28 @@
 			productName = InstaBlock;
 			productReference = B3F77EAD303BA4A500A3A69E /* InstaBlock.app */;
 			productType = "com.apple.product-type.application";
+		};
+		B3F77ED3303BA4A500A3A69E /* InstaBlockTunnel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B3F77ED7303BA4A500A3A69E /* Build configuration list for PBXNativeTarget "InstaBlockTunnel" */;
+			buildPhases = (
+				B3F77ED4303BA4A500A3A69E /* Sources */,
+				B3F77ED5303BA4A500A3A69E /* Frameworks */,
+				B3F77ED6303BA4A500A3A69E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				B3F77ED1303BA4A500A3A69E /* InstaBlockTunnel */,
+			);
+			name = InstaBlockTunnel;
+			packageProductDependencies = (
+			);
+			productName = InstaBlockTunnel;
+			productReference = B3F77ED0303BA4A500A3A69E /* InstaBlockTunnel.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -100,12 +192,20 @@
 			projectRoot = "";
 			targets = (
 				B3F77EAC303BA4A500A3A69E /* InstaBlock */,
+				B3F77ED3303BA4A500A3A69E /* InstaBlockTunnel */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		B3F77EAB303BA4A500A3A69E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B3F77ED6303BA4A500A3A69E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +222,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B3F77ED4303BA4A500A3A69E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B3F77EDA303BA4A500A3A69E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B3F77ED3303BA4A500A3A69E /* InstaBlockTunnel */;
+			targetProxy = B3F77EDB303BA4A500A3A69E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		B3F77EB6303BA4A600A3A69E /* Debug */ = {
@@ -178,7 +293,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -236,7 +351,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -251,11 +366,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = InstaBlock/InstaBlock.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = N459668449;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = InstaBlock/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -283,11 +400,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = InstaBlock/InstaBlock.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = N459668449;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = InstaBlock/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -310,6 +429,60 @@
 			};
 			name = Release;
 		};
+		B3F77ED8303BA4A500A3A69E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = InstaBlockTunnel/InstaBlockTunnel.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N459668449;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = InstaBlockTunnel/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = InstaBlockTunnel;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.helpon.InstaBlock.tunnel;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/InstaBlockTunnel/ResolvShim";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B3F77ED9303BA4A500A3A69E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = InstaBlockTunnel/InstaBlockTunnel.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N459668449;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = InstaBlockTunnel/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = InstaBlockTunnel;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.helpon.InstaBlock.tunnel;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/InstaBlockTunnel/ResolvShim";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -327,6 +500,15 @@
 			buildConfigurations = (
 				B3F77EB9303BA4A600A3A69E /* Debug */,
 				B3F77EBA303BA4A600A3A69E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B3F77ED7303BA4A500A3A69E /* Build configuration list for PBXNativeTarget "InstaBlockTunnel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B3F77ED8303BA4A500A3A69E /* Debug */,
+				B3F77ED9303BA4A500A3A69E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
