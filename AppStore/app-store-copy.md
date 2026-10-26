@@ -26,7 +26,7 @@ WHAT IT DOES
 • Blocking is always on. There's no toggle to cheat with at 1am.
 
 WHEN YOU WANT TO SCROLL
-Sometimes you do want to watch something. Tap 1, 5, 15 or 30 minutes and videos come back. When the timer runs out, they stop again on their own — you don't have to do anything, and you don't have to open the app. No willpower required, which is the whole point.
+Sometimes you do want to watch something. Hold 1, 5, 15 or 30 minutes for five seconds and videos come back. When the timer runs out, they stop again on their own — you don't have to do anything, and you don't have to open the app. The five-second hold is on purpose: long enough to notice you're choosing, short enough not to be annoying. After each break the buttons lock for a few seconds so one break can't roll straight into the next. No willpower required, which is the whole point.
 
 HOW IT WORKS (no dark magic)
 InstaBlock sets up a local, on-device network filter (iOS calls it a VPN, but nothing leaves your phone). It slows Instagram's and TikTok's video servers to a crawl — enough for photos and messages, nowhere near enough for video. That's it. No account, no sign-up, no servers, no data collection. Your traffic never goes anywhere except where it already went.
@@ -69,7 +69,7 @@ First release. Blocks Instagram Reels and TikTok videos while keeping messages, 
 ## App Review Information → Notes (this matters — reviewers will ask why there's a VPN)
 InstaBlock uses a Packet Tunnel network extension purely as a LOCAL, on-device content filter. It does not route traffic to any server: the tunnel claims no default route, intercepts only DNS lookups for Instagram's and TikTok's media CDNs (fbcdn.net, cdninstagram.com, tiktokcdn.com and related), and rate-limits traffic to those addresses so video can't stream while photos and messages still work. All other traffic never enters the tunnel. There is no account, no backend, no analytics, and no data collection of any kind.
 
-To test: install, tap Allow on the "Add VPN Configurations" prompt, open Instagram — Reels fail to load while DMs and photos work. Tap a duration in InstaBlock to allow videos temporarily; they stop again when the timer ends.
+To test: install, tap Allow on the "Add VPN Configurations" prompt, open Instagram — Reels fail to load while DMs and photos work. Hold a duration card in InstaBlock for 5 seconds to allow videos temporarily; they stop again when the timer ends, and the duration cards stay locked for a few seconds afterwards (5–30 s, matching the break).
 
 Demo account: not required (the app has no login).
 

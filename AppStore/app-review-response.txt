@@ -1,0 +1,65 @@
+RESPONSE TO APP REVIEW – REQUEST FOR ADDITIONAL INFORMATION
+InstaBlock 1.0
+
+1. SCREEN RECORDING
+
+A screen recording captured on a physical iPhone running the latest iOS is attached. It begins with launching InstaBlock and shows the typical user flow: granting the notification and VPN configuration prompts, the blocked state, Instagram with direct messages and photos working while Reels fail to load, starting a timed break so videos play again, and the automatic return to blocking when the break ends.
+
+InstaBlock has no account registration, login or account deletion (there are no accounts of any kind) and no user-generated content, so those flows do not exist and are not shown.
+
+2. PURPOSE AND TARGET AUDIENCE
+
+InstaBlock is a self-control utility for people who want to stop compulsively scrolling short-form video (Instagram Reels and TikTok) without deleting those apps or losing what they use them for: Instagram direct messages, stories, comments and photos.
+
+The problem it solves: iOS Screen Time and app blockers work at the level of a whole app, so the only options are losing Instagram messaging entirely or tapping "Ignore Limit". InstaBlock removes only the video feed. While it is on, Reels and TikTok videos fail to load; everything else in Instagram keeps working. When the user genuinely wants to watch something, one tap allows videos for 1, 5, 15 or 30 minutes, after which blocking resumes automatically.
+
+Target audience: adults and teens (the app is rated 4+ and shows no content of its own) who feel they spend too much time on short-form video. The app is free, with no in-app purchases, subscriptions or ads.
+
+3. SETUP AND ACCESS TO MAIN FEATURES
+
+No login, credentials, sample files or configuration are required.
+
+a) Launch InstaBlock. On first launch iOS shows the system prompt "InstaBlock Would Like to Add VPN Configurations" – tap Allow. Notification permission is also requested; it is used only for a local "Time's up" alert when a break ends.
+
+b) Blocking is now active. The main screen shows the status ring with "Instagram and TikTok videos are blocked", and a VPN badge appears in the status bar.
+
+c) To verify: open Instagram (a reviewer's own Instagram account is sufficient; InstaBlock does not interact with the account in any way). Reels and video posts stall or fail to load, while direct messages, stories, comments and photos work normally. In TikTok, the feed fails to load.
+
+d) To allow videos temporarily: return to InstaBlock and hold the 1, 5, 15 or 30 minute card for five seconds. A countdown appears and Reels play again during the break. When the countdown ends, videos are blocked again automatically and a local notification "Time's up" is shown. "Block videos now" ends a break early.
+
+e) iOS allows only one VPN at a time. If another VPN is turned on, InstaBlock pauses, shows the notification "InstaBlock is off" and the status "Paused – another VPN is active". It never disconnects the other VPN by itself; the user brings InstaBlock back with the notification's "Turn InstaBlock back on" action or the in-app button.
+
+There is no off switch by design: deleting the app removes the VPN configuration and the block.
+
+4. EXTERNAL SERVICES, TOOLS AND PLATFORMS
+
+InstaBlock uses no external services, backends, data providers, authentication services, payment processors, analytics or AI services, and contains no third-party SDKs. Everything runs on the device using Apple frameworks: NetworkExtension (NEPacketTunnelProvider, a local packet tunnel with no remote server), UserNotifications (local notifications only) and BackgroundTasks.
+
+How the filter works: the tunnel claims no default route. Only DNS lookups for Instagram's and TikTok's media content-delivery domains (fbcdn.net, cdninstagram.com, tiktokcdn.com and related) are directed to a resolver inside the tunnel, which forwards them to the network's own DNS server, learns the answered addresses and rate-limits traffic to those addresses so that video cannot stream while small photos still load. All other traffic on the device never enters the tunnel.
+
+The only network endpoints the app itself contacts are the device network's DNS resolver, with the public resolvers 1.1.1.1 (Cloudflare) and 8.8.8.8 (Google) as a fallback if the network's resolver is unreachable, and it does so purely to resolve those domain names. No user data, identifiers or usage information is transmitted anywhere. The app has no server of its own.
+
+5. REGIONAL DIFFERENCES
+
+The app functions identically in all regions and languages. Its behavior does not depend on location, carrier or App Store storefront. The only regional variable is which of Instagram's or TikTok's content-delivery hosts a given network resolves to, which the app learns automatically. There is no region-specific content, pricing or feature gating.
+
+6. REGULATED INDUSTRY / PROTECTED THIRD-PARTY MATERIAL
+
+InstaBlock does not operate in a regulated industry and contains no protected third-party material. It does not use, store, display or redistribute any Instagram, Meta or TikTok content, assets or APIs; it only limits the device's own network traffic to those services' public content-delivery hostnames. The names Instagram, Reels and TikTok appear in the app and its listing solely to describe compatibility, and the app states that it is not affiliated with Instagram, Meta, TikTok or ByteDance. No credentials or authorizations are required to provide this functionality.
+
+Contact for follow-up questions: support@instablock.app
+
+
+-----------------------------------------------------------------
+INTERNAL – SHOT LIST FOR THE SCREEN RECORDING (do not paste into the reply)
+-----------------------------------------------------------------
+
+Record on a physical iPhone on the current iOS release with the app freshly installed (delete it first so the VPN prompt appears). Use Control Center > Screen Recording. Keep it under about 2 minutes; no narration needed.
+
+1. Home screen > tap InstaBlock. Notification permission prompt > Allow. "Add VPN Configurations" prompt > Allow.
+2. Main screen: status ring, "Instagram and TikTok videos are blocked", VPN badge in the status bar (hold 2-3 s).
+3. Switch to Instagram: scroll the feed (photos load), open a DM thread (works), open the Reels tab: spinner, videos do not play (hold about 10 s so the stall is obvious).
+4. Optional: open TikTok; the feed fails to load.
+5. Back to InstaBlock: tap "1 minute". Countdown appears. Switch to Instagram: Reels now play.
+6. Wait for the countdown to finish while staying on Instagram: the "Time's up" notification banner appears and Reels stop loading again.
+7. Return to InstaBlock: it shows the blocked state again. Optionally tap "5 minutes" and then "Block videos now" to show ending a break early.

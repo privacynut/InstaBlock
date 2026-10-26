@@ -1,0 +1,27 @@
+RESPONSE TO APP REVIEW – VPN FUNCTIONALITY
+InstaBlock 1.0
+
+Thank you for the review. InstaBlock does use the NetworkExtension framework (an NEPacketTunnelProvider), so the automated analysis is correct that the app contains VPN functionality. It is not a VPN service in the usual sense: there is no remote server, nothing is routed off the device, and the tunnel exists only to let the app filter Instagram and TikTok video traffic locally. Answers to the three questions follow.
+
+1. WHAT USER INFORMATION IS THE APP COLLECTING USING VPN?
+
+None. InstaBlock collects no user information of any kind, through the VPN or otherwise.
+
+The packet tunnel claims no default route and never sees general traffic. The only traffic that enters it is (a) DNS lookups for Instagram's and TikTok's media content-delivery domains (fbcdn.net, cdninstagram.com, tiktokcdn.com and related), which are forwarded unchanged to the device network's own resolver, and (b) the resulting media connections, which the tunnel slows to a trickle or drops so that video cannot play. The app does not read, inspect, decrypt, log or store the content of any traffic. It does not record browsing activity, visited hosts, IP addresses, device identifiers, location, contacts or anything about the user. The only data it keeps is on the device itself: the set of content-delivery IP addresses it has learned (so the filter keeps working against cached connections) and the user's own break-timer settings. Nothing is transmitted anywhere.
+
+2. FOR WHAT PURPOSES ARE YOU COLLECTING THIS INFORMATION?
+
+Not applicable: no information is collected, so there are no planned uses. The sole purpose of the tunnel is on-device content filtering chosen by the user: making short-form video stall while direct messages, stories, comments and photos keep working. There are no accounts, no analytics, no advertising, no crash reporting SDKs and no third-party code in the app.
+
+3. WILL THE DATA BE SHARED WITH ANY THIRD PARTIES?
+
+No. There is no data to share. InstaBlock operates no servers and never contacts one. The only endpoints the app reaches are the network's DNS resolver (with 1.1.1.1 and 8.8.8.8 as a fallback if that resolver is unreachable), used exclusively to resolve the filtered domain names, which is a lookup the device would perform in any case. No information is stored outside the user's device.
+
+ADDITIONAL CONTEXT
+
+- The App Privacy section of the listing declares "Data Not Collected", which is accurate.
+- The VPN use is disclosed to users before the system consent prompt, in an in-app explainer screen, in the store description ("How it works") and in the privacy policy at https://instablock.app/privacy.
+- The app complies with Guideline 5.4: the VPN is implemented with NEPacketTunnelProvider, is used only for the stated filtering purpose, does not sell, use or disclose any data, and is not used for monetization or to inject advertising.
+- Deleting the app removes the VPN configuration entirely.
+
+The same information has been added to the App Review Information notes for this submission.

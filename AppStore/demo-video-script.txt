@@ -1,0 +1,41 @@
+INSTABLOCK 1.0 – APP REVIEW DEMO VIDEO SCRIPT (physical iPhone, ~90 s)
+
+Prep: delete and reinstall InstaBlock; Instagram signed in; Do Not Disturb on;
+record via QuickTime (iPhone over USB, File > New Movie Recording) or iOS screen recorder.
+Captions, no voice-over.
+
+1. FIRST RUN (0:00–0:20)
+   Launch InstaBlock. Explainer "One quick permission" -> Continue.
+   Allow notifications. Allow "Add VPN Configurations".
+   Hold on main screen: "Instagram and TikTok videos are blocked", VPN badge visible.
+   Caption: "Local filter only – no server, no account, no data collected."
+
+2. BLOCKING (0:20–0:40)
+   Switch to Instagram. Open a DM, scroll photos (work normally).
+   Open Reels: let it fail to load for ~5 s.
+   Caption: "Messages and photos work. Reels do not load."
+
+3. BREAK (0:40–0:55)
+   Back in InstaBlock. Hold the "1 minute" card until the ring fills (5 s).
+   Countdown appears. Switch to Instagram: a Reel plays.
+   Caption: "Hold a card for 5 seconds to allow videos for a set time."
+
+4. RE-BLOCK (0:55–1:20)
+   Stay in Instagram until the minute ends: "Time's up" notification appears, Reels stall.
+   Switch to InstaBlock: blocked state restored, cards locked "NEXT BREAK IN 0:05".
+   Caption: "Videos block again automatically when the break ends."
+
+5. OTHER VPN (optional, 1:20–1:35)
+   Settings > VPN: enable another VPN. Notification "InstaBlock is off" with
+   "Turn InstaBlock back on" action. Disable the other VPN, tap the action,
+   InstaBlock shows blocked again.
+   Caption: "Pauses for other VPNs; never disconnects them by itself."
+
+NOTES FIELD TEXT
+Demo video (InstaBlock 1.0, recorded on a physical iPhone running iOS 26): <link>
+The video shows the first-run explainer, the notification and VPN configuration permission
+prompts, the blocked state, Instagram DMs and photos working while Reels fail to load, a timed
+break started by holding a duration card, videos playing during the break, the automatic
+re-block and "Time's up" notification when the break ends, and the app pausing when another VPN
+is enabled and resuming from the notification action. There are no accounts, logins, purchases
+or additional features. The video is valid for all storefronts.
