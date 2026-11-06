@@ -21,7 +21,7 @@ Captions, no voice-over.
    Caption: "Hold a card for 5 seconds to allow videos for a set time."
 
 4. RE-BLOCK (0:55–1:20)
-   Stay in Instagram until the minute ends: "Time's up" notification appears, Reels stall.
+   Stay in Instagram until the minute ends: "Time's up" notification appears, Reels stop loading.
    Switch to InstaBlock: blocked state restored, cards locked "NEXT BREAK IN 0:05".
    Caption: "Videos block again automatically when the break ends."
 

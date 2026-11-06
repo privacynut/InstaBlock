@@ -74,7 +74,7 @@ GUIDES = [
 <h2>Why there's no setting for this</h2>
 <p>Instagram has never shipped an option to disable Reels; the closest it offers is a per-video "Not interested" and a daily time reminder you can dismiss. iOS Screen Time works at the app level — it can limit or block <em>Instagram</em>, but it has no idea what a Reel is. That leaves most people choosing between deleting the app (and losing DMs, group chats and stories) or white-knuckling it.</p>
 <h2>What actually works: block the video, not the app</h2>
-<p>Instagram loads photos and messages from its own servers, and streams video from content delivery hosts. A filter running on your phone can slow those video hosts to a trickle. Photos are small enough to get through; a video needs sustained bandwidth and simply never starts. From inside Instagram it looks like Reels are "broken" — the tab opens, the spinner turns, nothing plays — while the feed, DMs, stories and comments behave normally.</p>
+<p>Instagram loads photos and messages from its own servers, and streams video from content delivery hosts. A filter running on your phone can restrict connections to those video hosts. Photos are small enough to get through; a video needs a sustained stream and simply never starts. From inside Instagram it looks like Reels are "broken" — the tab opens, the spinner turns, nothing plays — while the feed, DMs, stories and comments behave normally.</p>
 <p>That is exactly what InstaBlock does:</p>
 <ol>
 <li>Install <a href="/">InstaBlock</a> from the App Store and open it once. iOS asks to add a VPN configuration — tap <strong>Allow</strong>. (It's a local filter; nothing is routed through a server.)</li>
@@ -83,7 +83,7 @@ GUIDES = [
 </ol>
 <h2>What to expect</h2>
 <ul>
-<li>Reels and video posts stall instead of playing; Instagram doesn't crash.</li>
+<li>Reels and video posts don't play; Instagram doesn't crash.</li>
 <li>Photos may load slightly slower than usual. Messages are unaffected.</li>
 <li>A VPN badge appears in the status bar while the filter is on.</li>
 <li>Videos Instagram already downloaded (for example during a break) may still play once from cache.</li>
@@ -288,8 +288,9 @@ losing Instagram messages. It is not affiliated with Instagram, Meta, TikTok or 
 The app installs a local iOS packet-tunnel (shown by iOS as a VPN, but with no
 remote server). It intercepts DNS lookups only for Instagram's and TikTok's media
 CDN domains (fbcdn.net, cdninstagram.com, tiktokcdn.com and related), learns the
-resolved addresses, and rate-limits traffic to them (Instagram) or drops it
-(TikTok). Photos are small and survive the limit; video cannot stream. All other
+resolved addresses, and applies a per-host firewall policy: TikTok's video hosts
+are blocked; Instagram's media hosts, which also serve photos, are bandwidth-limited
+so photos load and video cannot stream. All other
 traffic never enters the filter.
 
 ## Other VPNs

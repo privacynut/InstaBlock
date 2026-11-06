@@ -18,8 +18,9 @@ losing Instagram messages. It is not affiliated with Instagram, Meta, TikTok or 
 The app installs a local iOS packet-tunnel (shown by iOS as a VPN, but with no
 remote server). It intercepts DNS lookups only for Instagram's and TikTok's media
 CDN domains (fbcdn.net, cdninstagram.com, tiktokcdn.com and related), learns the
-resolved addresses, and rate-limits traffic to them (Instagram) or drops it
-(TikTok). Photos are small and survive the limit; video cannot stream. All other
+resolved addresses, and applies a per-host firewall policy: TikTok's video hosts
+are blocked; Instagram's media hosts, which also serve photos, are bandwidth-limited
+so photos load and video cannot stream. All other
 traffic never enters the filter.
 
 ## Other VPNs

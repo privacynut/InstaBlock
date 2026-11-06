@@ -1,0 +1,40 @@
+APPEAL – GUIDELINE 2.5.1 REJECTION
+InstaBlock 1.0
+
+We respectfully ask the App Review Board to reconsider the 2.5.1 rejection of InstaBlock, or to tell us which specific API is considered misused so we can address it. We believe the app uses one public API, exactly as documented, for a purpose Apple already permits in many apps on the App Store.
+
+1. WHAT THE APP DOES
+
+InstaBlock is an on-device network filter chosen by the user to stop compulsive short-form video scrolling. It stops Instagram Reels and TikTok videos from loading while Instagram direct messages, stories, comments and photos keep working. There is no server, no account and no data collection.
+
+2. THE API AND HOW IT IS USED
+
+The app uses a single Network Extension API: NEPacketTunnelProvider, configured through NETunnelProviderManager, with the standard packet-tunnel-provider entitlement.
+
+The provider is used precisely as the documentation describes: it receives IP packets for the routes and DNS match domains it declares in NEPacketTunnelNetworkSettings and decides what to do with them. Specifically:
+
+- It declares no default route. The only traffic that enters the tunnel is DNS for a short list of media content-delivery domains (fbcdn.net, cdninstagram.com, tiktokcdn.com and related) and connections to the addresses those names resolve to.
+- DNS queries are forwarded unchanged to the network's own resolver and the real answers are returned.
+- Connections to the learned addresses receive a per-host firewall policy: TikTok's video hosts are blocked; Instagram's media hosts, which also serve photos, are bandwidth-limited so photos load and video does not.
+
+No private API, no undocumented behaviour, no method swizzling, no code injection, and no interaction of any kind with the Instagram or TikTok apps. The app does not modify, read, decrypt or redirect their traffic. It applies a network policy to a set of hosts, which is the documented purpose of a packet tunnel provider.
+
+3. THIS IS THE SAME PATTERN AS APPS ALREADY APPROVED
+
+On-device firewall and content-blocking apps built on NEPacketTunnelProvider with no remote server are an established category on the App Store (for example Lockdown Privacy, AdGuard, 1Blocker's firewall and NextDNS). They block connections to hosts on a list; several of them include per-domain policies and rules for specific services. InstaBlock applies the same mechanism to a narrower list of hosts and adds a bandwidth limit, which is a standard firewall and quality-of-service capability, rather than an outright block, so that users keep their photos and messages.
+
+We note that the rejection says the app uses APIs "to stall content". We understand the concern, but the app does not stall or degrade Instagram or TikTok themselves: it restricts the network path to specific video-delivery servers at the user's explicit request, exactly as a firewall app restricts the network path to ad or tracker servers. The user installs InstaBlock for precisely this effect and grants it through the system "Add VPN Configurations" consent dialog; the mechanism is disclosed in the app's first-run screen, in the App Store description and in the privacy policy.
+
+4. GUIDELINE 5.4 COMPLIANCE
+
+The app uses the NEVPNManager / NETunnelProviderManager API as required, does not sell, use or disclose any data, serves no ads and has no monetization, and clearly discloses its use of the VPN configuration to users.
+
+5. NO ALTERNATIVE API EXISTS
+
+We looked for an approved alternative. The Screen Time APIs (FamilyControls, ManagedSettings, DeviceActivity) can only shield whole apps or web domains in Safari; they cannot leave Instagram's messaging working while stopping Reels, which is the entire point of the app. NEFilterDataProvider and NEDNSProxyProvider are limited to supervised devices. NEPacketTunnelProvider is the only public API that can apply a per-host network policy on an unsupervised iPhone, and the app uses it for that documented purpose.
+
+6. REQUEST
+
+We ask that the app be approved, or that App Review identify the specific API and usage it considers outside the documentation so that we can change it. We are glad to supply the extension's source for the DNS and packet-handling logic, a screen recording, or any other detail that helps.
+
+Thank you for your time.
