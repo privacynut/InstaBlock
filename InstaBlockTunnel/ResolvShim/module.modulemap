@@ -1,0 +1,7 @@
+// Exposes libresolv (res_ninit / res_getservers) to Swift so the tunnel can
+// discover the network's real DNS servers and forward queries to them.
+module ResolvShim [system] {
+    header "ResolvShim.h"
+    link "resolv"
+    export *
+}

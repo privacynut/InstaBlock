@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/assets/favicon.png"><link rel="apple-touch-icon" href="/assets/icon.png"><link rel="stylesheet" href="/styles.css"><title>Support — InstaBlock</title><meta name="description" content="Get help with InstaBlock: quick fixes for videos still playing, VPN permission, and how to contact us."><link rel="canonical" href="https://instablock.app/support"><meta property="og:type" content="website"><meta property="og:site_name" content="InstaBlock"><meta property="og:url" content="https://instablock.app/support"><meta property="og:title" content="Support — InstaBlock"><meta property="og:description" content="Get help with InstaBlock: quick fixes for videos still playing, VPN permission, and how to contact us."><meta property="og:image" content="https://instablock.app/assets/01-reels-blocked.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Support — InstaBlock"><meta name="twitter:description" content="Get help with InstaBlock: quick fixes for videos still playing, VPN permission, and how to contact us."><meta name="twitter:image" content="https://instablock.app/assets/01-reels-blocked.png"></head><body><header><div class="wrap"><nav><a class="brand" href="/"><img src="/assets/icon.png" alt=""><span>InstaBlock</span></a><ul><li><a href="/#how">How it works</a></li><li><a href="/guides">Guides</a></li><li><a href="/#faq">FAQ</a></li><li><a href="/support">Support</a></li><li><a href="/privacy">Privacy</a></li></ul></nav></div></header>
+<main class="wrap prose">
+<h1>Support</h1><p class="meta">Stuck? Something not blocking? Tell us — a human reads every message.</p>
+<h2>Quick fixes first</h2>
+<ul>
+<li><strong>Videos still play?</strong> Open InstaBlock once so the filter starts, then force-quit Instagram/TikTok and reopen. Already-cached clips may play once; new ones won't.</li>
+<li><strong>"Permission denied" on first launch?</strong> iOS asked to add a VPN configuration and "Don't Allow" was tapped. Delete InstaBlock, reinstall, and tap <em>Allow</em>.</li>
+<li><strong>No VPN badge in the status bar?</strong> Blocking isn't running. Open InstaBlock — it re-enables the filter every time it's opened.</li>
+<li><strong>Want it gone?</strong> Delete the app. Settings → VPN will drop the InstaBlock profile with it.</li>
+</ul>
+<h2>Contact us</h2>
+<form id="f" novalidate>
+  <label>Name (optional)<input name="name" autocomplete="name" maxlength="120"></label>
+  <label>Email<input name="email" type="email" required autocomplete="email" maxlength="200" placeholder="so we can reply"></label>
+  <label>What's going on?<textarea name="message" required maxlength="5000" placeholder="Which app, which iPhone/iOS version, and what you expected to happen."></textarea></label>
+  <label class="hp">Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label>
+  <button class="btn" type="submit">Send message</button>
+  <div class="notice" id="ok">Got it — we'll reply to your email, usually within a day or two.</div>
+  <div class="notice" id="err">Couldn't send just now. Email us directly at <a id="mailto" href="mailto:support@instablock.app">support@instablock.app</a>.</div>
+</form>
+<script>
+const f=document.getElementById('f'),ok=document.getElementById('ok'),err=document.getElementById('err');
+f.addEventListener('submit',async e=>{e.preventDefault();ok.className=err.className='notice';
+ if(!f.reportValidity())return;const b=f.querySelector('button');b.disabled=true;
+ const d=Object.fromEntries(new FormData(f).entries());
+ try{const r=await fetch('/api/support',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(d)});
+  if(r.ok){ok.className='notice ok';f.reset();}else{throw new Error(await r.text());}}
+ catch(x){document.getElementById('mailto').href='mailto:support@instablock.app?subject='+encodeURIComponent('InstaBlock support')+'&body='+encodeURIComponent((d.message||'')+'\n\n— '+(d.name||'')+' '+(d.email||''));err.className='notice err';}
+ b.disabled=false;});
+</script>
+</main><footer><div class="wrap"><div class="row"><div>© 2026 InstaBlock · Not affiliated with Instagram, Meta, or TikTok.</div><div><a href="/guides">Guides</a> · <a href="/support">Support</a> · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms of Service</a></div></div></div></footer></body></html>
